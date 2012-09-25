@@ -1,0 +1,128 @@
+<!doctype html>
+<html xmlns:og="http://ogp.me/ns#" ng-app="flexDemo">
+  <head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  	<title>flexbox experiment</title>
+  	<meta name="description" content="Test CSS flexbox with this interactive tool">
+  	<meta name="author" content="Eiji Kitamura">
+
+    <!-- <meta http-equiv="content-security-policy" content="default-src: 'self';" /> -->
+  	<meta name="viewport" content="width=device-width">
+    <meta property="og:title" content="flexbox experiment">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Test CSS flexbox with this interactive tool">
+    <meta property="og:url" content="http://demo.agektmr.com/flexbox/">
+    <meta property="og:image" content="http://slides.agektmr.com/websocket_basic/images/h5_logo.png">
+
+  	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- <script src="js/angular.js"></script> -->
+    <script src="js/angular.js"></script>
+    <script src="js/script.js"></script>
+    <script type="text/ng-template" id="box-definition.html">
+      <h3 ng-mouseenter="box.hoverItem=true" ng-mouseleave="box.hoverItem=false">{{name}}</h3>
+      <p>.box div.{{name}} {</p>
+      <ul>
+        <li><a href="https://developer.mozilla.org/en-US/docs/CSS/order" target="_blank" title="{{text.orderText}}">order</a>:<input type="number" ng-model="box.order" min="-1" max="3" /></li>
+        <li><i ng-class="{'icon-plus':!box.flexOpen, 'icon-minus':box.flexOpen}" ng-click="box.flexOpen=!box.flexOpen"></i> <a href="https://developer.mozilla.org/en-US/docs/CSS/flex" target="_blank" title="{{text.flexText}}">flex</a>: <input type="number" ng-model="box.flexGrow" min="0" ng-disabled="box.flexOpen"/> <input type="number" ng-model="box.flexShrink" min="0" ng-disabled="box.flexOpen"/> <input type="text" ng-model="box.flexBasis" list="flexBasis" ng-disabled="box.flexOpen" />;
+          <ul ng-show="box.flexOpen">
+            <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-grow" target="_blank" title="{{text.flexGrowText}}">flex-grow</a>: <input type="number" ng-model="box.flexGrow" min="0"/>;</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-shrink" target="_blank" title="{{text.flexShrinkText}}">flex-shrink</a>: <input type="number" ng-model="box.flexShrink" min="0"/>;</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-basis" target="_blank" title="{{text.flexBasisText}}">flex-basis</a>: <input type="text" ng-model="box.flexBasis" list="flexBasis" />;</li>
+          </ul>
+        </li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="box.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select>;</li>
+      </ul>
+      <p>}</p>
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <span class="brand">flexbox experiment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="hero-unit">
+        <h1>CSS Flexbox</h1>
+        <p>The CSS Flexible Box Layout Model, or "flexbox", is one of the specification in CSS3. It provides for the arrangement of elements on a page such that the elements behave predictably when the page layout must accommodate different screen sizes and different display devices. For many applications, the flexible box model provides an improvement over the block model in that it does not use floats, nor do the flex container's margins collapse with the margins of its contents.</p>
+        <p>For more details about using Flexbox, see <a href="https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes" target="_blank">Using CSS flexible boxes</a>. Official spec is <a href="http://www.w3.org/TR/css3-flexbox/" target="_blank">here</a>.</p>
+      </div >
+      <div class="row" ng-controller="FlexboxCtrl">
+        <div class="span6 sticky">
+          <h3>Output</h3>
+          <div class="visual">
+            <div class="box" ng-style="model | vendorPrefix" ng-class="{hover:hoverContainer}">
+              <div ng-style="box | vendorPrefix" ng-class="{hover:hoverItems||box.hoverItem}" ng-repeat="(name, box) in boxes">{{name}}</div>
+            </div>
+          </div>
+            <pre>&lt;div class="box"&gt;
+  &lt;div class="A"&gt;A&lt;/div&gt;
+  &lt;div class="B"&gt;B&lt;/div&gt;
+  &lt;div class="C"&gt;C&lt;/div&gt;
+&lt;/div&gt;</pre>
+        </div>
+        <div class="span5 row well form">
+          <div>
+            <h3 ng-mouseenter="hoverContainer=true" ng-mouseleave="hoverContainer=false">flex container</h3>
+            <p>.box {</p>
+            <ul>
+              <li>display: flex;</li>
+              <li><i ng-class="{'icon-plus':!flexFlowOpen, 'icon-minus':flexFlowOpen}" ng-click="flexFlowOpen=!flexFlowOpen"></i> <a href="https://developer.mozilla.org/en-US/docs/CSS/flex-flow" target="_blank" title="{{text.flexFlowText}}">flex-flow</a>: <select ng-model="model.flexDirection" ng-options="flexDirection for flexDirection in ['row', 'row-reverse', 'column', 'column-reverse']" ng-disabled="flexFlowOpen" ></select> <select ng-model="model.flexWrap" ng-options="flexWrap for flexWrap in ['nowrap', 'wrap', 'wrap-reverse']" ng-disabled="flexFlowOpen" ></select>;
+                <ul ng-show="flexFlowOpen">
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-direction" target="_blank" title="{{text.flexDirectionText}}">flex-direction</a>: <select ng-model="model.flexDirection" ng-options="flexDirection for flexDirection in ['row', 'row-reverse', 'column', 'column-reverse']" ng-change="change()"></select>;</li>
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-wrap" target="_blank" title="{{text.flexWrapText}}">flex-wrap</a>: <select ng-model="model.flexWrap" ng-options="flexWrap for flexWrap in ['nowrap', 'wrap', 'wrap-reverse']" ng-change="change()"></select>;</li>
+                </ul>
+              </li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/justify-content" target="_blank" title="{{text.justifyContentText}}">justify-content</a>: <select ng-model="model.justifyContent" ng-options="justifyContent for justifyContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']" ng-change="change()"></select>;</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-content" target="_blank" title="{{alignContentText}}">align-content</a>: <select ng-model="model.alignContent" ng-options="alignContent for alignContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch']" ng-change="change()"></select>;</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-items" target="_blank" title="{{alignItemsText}}">align-items</a>: <select ng-model="model.alignItems" ng-options="alignItems for alignItems in ['flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select>;</li>
+            </ul>
+            <p>}</p>
+          </div>
+          <div>
+            <h3 ng-mouseenter="hoverItems=true" ng-mouseleave="hoverItems=false">flex item</h3>
+            <p>.box div {</p>
+            <ul>
+              <li ng-class="{disabled:flexOpen}"><i ng-class="{'icon-plus':!flexOpen, 'icon-minus':flexOpen}" ng-click="flexOpen=!flexOpen"></i> <a href="https://developer.mozilla.org/en-US/docs/CSS/flex" target="_blank" title="{{text.flexText}}">flex</a>: <input type="number" ng-model="model.flexGrow" min="0" ng-disabled="flexOpen" /> <input type="number" ng-model="model.flexShrink" min="0" ng-disabled="flexOpen" /> <input type="text" ng-model="model.flexBasis" list="flexBasis" ng-disabled="flexOpen" />;
+                <ul ng-show="flexOpen">
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-grow" target="_blank" title="{{text.flexGrowText}}">flex-grow</a>: <input type="number" ng-model="model.flexGrow" min="0"/>;</li>
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-shrink" target="_blank" title="{{text.flexShrinkText}}">flex-shrink</a>: <input type="number" ng-model="model.flexShrink" min="0"/>;</li>
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-basis" target="_blank" title="{{text.flexBasisText}}">flex-basis</a>: <input type="text" ng-model="model.flexBasis" list="flexBasis" />;
+                 </li>
+                </ul>
+              </li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="model.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select></li>
+            </ul>
+            <p>}</p>
+
+            <div ng-repeat="name in ['A', 'B', 'C']" box-definition="name" index="$index" class="box-definition"></div>
+
+            <datalist id="flexBasis">
+              <option value="auto"></option>
+              <option value="initial"></option>
+              <option value="none"></option>
+              <option value="10px"></option>
+              <option value="10%"></option>
+            </datalist>
+          </div>
+        </div>
+      </div>
+    <footer class="footer">
+      <hr>
+      <p>This demo is developed by <a href="http://profiles.google.com/agektmr">Eiji Kitamura</a>.</p>
+    </footer>
+    </div> <!-- /container -->
+    <script>
+    	var _gaq=[['_setAccount','UA-31105737-1'],['_trackPageview']];
+    	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    	g.src='http://www.google-analytics.com/ga.js';
+    	s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+  </body>
+</html>
