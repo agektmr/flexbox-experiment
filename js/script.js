@@ -25,9 +25,9 @@ flexDemo.value('model', {
   flexBasis: "auto",
   flexDirection: "row",
   flexWrap: "nowrap",
-  justifyContent: "flex-start",
-  alignContent: "stretch",
-  alignItems: "stretch",
+  justifyContent: "center",
+  alignContent: "center",
+  alignItems: "center",
   alignSelf: "auto"
 });
 
