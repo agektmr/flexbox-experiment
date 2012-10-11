@@ -17,6 +17,10 @@ Author: Eiji Kitamura (agektmr@gmail.com)
 */
 .box {
   display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
   background-color: gray;
   width: 300px;
   height: 200px;
@@ -82,4 +86,13 @@ select:hover, input:hover {
 i {
   margin-left: -23px !important;
   cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .hero-unit {
+    padding: 20px;
+  }
+  .sticky {
+    position: static;
+  }
 }
