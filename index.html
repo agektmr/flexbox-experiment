@@ -9,7 +9,7 @@
   	<meta name="author" content="Eiji Kitamura">
 
     <!-- <meta http-equiv="content-security-policy" content="default-src: 'self';" /> -->
-  	<meta name="viewport" content="width=device-width">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="CSS Flexbox Please!">
     <meta property="og:type" content="website">
     <meta property="og:description" content="Test CSS flexbox with this interactive tool">
@@ -17,8 +17,8 @@
     <meta property="og:image" content="http://slides.agektmr.com/websocket_basic/images/h5_logo.png">
 
   	<link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!-- <script src="js/angular.js"></script> -->
     <script src="js/angular.js"></script>
     <script src="js/script.js"></script>
     <script type="text/ng-template" id="box-definition.html">
@@ -33,7 +33,7 @@
             <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-basis" target="_blank" title="{{text.flexBasisText}}">flex-basis</a>: <input type="text" ng-model="box.flexBasis" list="flexBasis" />;</li>
           </ul>
         </li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="box.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select>;</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="box.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']"></select>;</li>
       </ul>
       <p class="form">}</p>
     </script>
@@ -49,7 +49,7 @@
 
     <div class="container">
       <div class="hero-unit">
-        <h1>CSS Flexbox Please!</h1>
+        <h1 class="hidden-phone">CSS Flexbox Please!</h1>
         <p>The CSS Flexible Box Layout Model, or "flexbox", is one of the specification in CSS3. It provides for the arrangement of elements on a page such that the elements behave predictably when the page layout must accommodate different screen sizes and different display devices. For many applications, the flexible box model provides an improvement over the block model in that it does not use floats, nor do the flex container's margins collapse with the margins of its contents.</p>
         <p>For more details about using Flexbox, see <a href="https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_flexible_boxes" target="_blank">Using CSS flexible boxes</a>. Official spec is <a href="http://www.w3.org/TR/css3-flexbox/" target="_blank">here</a>.</p>
       </div >
@@ -76,13 +76,13 @@
               <li>display: flex;</li>
               <li><i ng-class="{'icon-plus':!flexFlowOpen, 'icon-minus':flexFlowOpen}" ng-click="flexFlowOpen=!flexFlowOpen"></i> <a href="https://developer.mozilla.org/en-US/docs/CSS/flex-flow" target="_blank" title="{{text.flexFlowText}}">flex-flow</a>: <select ng-model="model.flexDirection" ng-options="flexDirection for flexDirection in ['row', 'row-reverse', 'column', 'column-reverse']" ng-disabled="flexFlowOpen" ></select> <select ng-model="model.flexWrap" ng-options="flexWrap for flexWrap in ['nowrap', 'wrap', 'wrap-reverse']" ng-disabled="flexFlowOpen" ></select>;
                 <ul ng-show="flexFlowOpen">
-                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-direction" target="_blank" title="{{text.flexDirectionText}}">flex-direction</a>: <select ng-model="model.flexDirection" ng-options="flexDirection for flexDirection in ['row', 'row-reverse', 'column', 'column-reverse']" ng-change="change()"></select>;</li>
-                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-wrap" target="_blank" title="{{text.flexWrapText}}">flex-wrap</a>: <select ng-model="model.flexWrap" ng-options="flexWrap for flexWrap in ['nowrap', 'wrap', 'wrap-reverse']" ng-change="change()"></select>;</li>
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-direction" target="_blank" title="{{text.flexDirectionText}}">flex-direction</a>: <select ng-model="model.flexDirection" ng-options="flexDirection for flexDirection in ['row', 'row-reverse', 'column', 'column-reverse']"></select>;</li>
+                  <li><a href="https://developer.mozilla.org/en-US/docs/CSS/flex-wrap" target="_blank" title="{{text.flexWrapText}}">flex-wrap</a>: <select ng-model="model.flexWrap" ng-options="flexWrap for flexWrap in ['nowrap', 'wrap', 'wrap-reverse']"></select>;</li>
                 </ul>
               </li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/justify-content" target="_blank" title="{{text.justifyContentText}}">justify-content</a>: <select ng-model="model.justifyContent" ng-options="justifyContent for justifyContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']" ng-change="change()"></select>;</li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-content" target="_blank" title="{{alignContentText}}">align-content</a>: <select ng-model="model.alignContent" ng-options="alignContent for alignContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch']" ng-change="change()"></select>;</li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-items" target="_blank" title="{{alignItemsText}}">align-items</a>: <select ng-model="model.alignItems" ng-options="alignItems for alignItems in ['flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select>;</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/justify-content" target="_blank" title="{{text.justifyContentText}}">justify-content</a>: <select ng-model="model.justifyContent" ng-options="justifyContent for justifyContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around']"></select>;</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-content" target="_blank" title="{{alignContentText}}">align-content</a>: <select ng-model="model.alignContent" ng-options="alignContent for alignContent in ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'stretch']"></select>;</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-items" target="_blank" title="{{alignItemsText}}">align-items</a>: <select ng-model="model.alignItems" ng-options="alignItems for alignItems in ['flex-start', 'flex-end', 'center', 'baseline', 'stretch']"></select>;</li>
             </ul>
             <p class="form">}</p>
           </div>
@@ -98,7 +98,7 @@
                  </li>
                 </ul>
               </li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="model.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']" ng-change="change()"></select></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/CSS/align-self" target="_blank" title="{{text.alignSelfText}}">align-self</a>: <select ng-model="model.alignSelf" ng-options="alignSelf for alignSelf in ['auto', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch']"></select></li>
             </ul>
             <p class="form">}</p>
 
