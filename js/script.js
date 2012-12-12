@@ -20,15 +20,11 @@ Author: Eiji Kitamura (agektmr@gmail.com)
 var flexDemo = angular.module('flexDemo', []);
 
 flexDemo.value('model', {
-  flexGrow: 0,
-  flexShrink: 1,
-  flexBasis: "auto",
   flexDirection: "row",
   flexWrap: "nowrap",
   justifyContent: "center",
   alignContent: "center",
-  alignItems: "center",
-  alignSelf: "auto"
+  alignItems: "center"
 });
 
 flexDemo.value('text', {
@@ -47,14 +43,51 @@ flexDemo.value('text', {
 });
 
 flexDemo.value('boxes', {});
+flexDemo.value('box_list', ['A', 'B', 'C']);
 
-flexDemo.controller('FlexboxCtrl', function($scope, model, text, boxes) {
+flexDemo.controller('FlexboxCtrl', function($scope, model, text, boxes, box_list) {
   $scope.model = model;
   $scope.text = text;
   $scope.boxes = boxes;
+  $scope.box_list = box_list;
 
   $scope.flexOpen = false;
   $scope.flexFlowOpen = false;
+  var names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  $scope.add_box = function() {
+    if ($scope.box_list.length < 10) {
+      $scope.box_list.push(names[$scope.box_list.length]);
+    }
+    console.log($scope.box_list);
+  };
+  $scope.remove_box = function() {
+    if ($scope.box_list.length > 2) {
+      var box = $scope.box_list.pop();
+      delete $scope.boxes[box];
+    }
+    console.log($scope.box_list);
+  };
+});
+
+flexDemo.directive('boxVisual', function(box_list) {
+  return {
+    link: function($scope, $element, attrs) {
+      $scope.box_list = box_list;
+      var draw = function(list) {
+        var html = '<pre>&lt;div class="box"&gt;\n';
+        for (var i = 0; i < list.length; i++) {
+          html += '  &lt;div class="'+list[i]+'"&gt;'+list[i]+'&lt;/div&gt;\n';
+        }
+        html += '&lt;/div&gt;</pre>';
+        $element.html(html);
+      };
+      draw($scope.box_list);
+      // How do I reflect that box is being added?
+      $scope.$watch('box_list', function(newValue, oldValue) {
+        draw(newValue);
+      }, true);
+    }
+  };
 });
 
 flexDemo.directive('boxDefinition', function(boxes, text) {
@@ -68,14 +101,17 @@ flexDemo.directive('boxDefinition', function(boxes, text) {
       $scope.text = text;
       $scope.box = boxes[$scope.name] = {
         order: $scope.index + 1,
-        flexGrow: 0,
+        flexGrow: 1,
         flexShrink: 1,
         flexBasis: "auto",
         alignSelf: "auto",
+        minWidth: "auto",
+        minHeight: "auto",
         hoverItem: false,
         flexOpen: false
       };
-  }};
+    }
+  };
 });
 
 flexDemo.filter('vendorPrefix', function() {

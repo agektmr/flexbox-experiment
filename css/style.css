@@ -17,18 +17,22 @@ Author: Eiji Kitamura (agektmr@gmail.com)
 */
 .box {
   display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
   background-color: gray;
   width: 300px;
   height: 200px;
-  border: dotted 3px #eee;
   -webkit-transition: all 0.1s ease-out 0s;
 }
 .box div {
-  min-width: 49px;
-  min-height: 49px;
   background-color: #eee;
-  border: dotted 3px #aaa;
+  border: outset 1px #aaa;
   -webkit-transition: all 0.1s ease-out 0s;
+  white-space: no-wrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .hover {
   background-color: #555 !important;
@@ -56,6 +60,9 @@ Author: Eiji Kitamura (agektmr@gmail.com)
 .form {
   font-family: 'Courier New', monospace;
 }
+.form i {
+  margin-left: -23px;
+}
 ul {
   list-style: none;
 }
@@ -81,7 +88,11 @@ select:hover,
 input:hover {
   outline: 1px solid #ccc;
 }
-i {
-  margin-left: -23px !important;
-  cursor: pointer;
+@media (max-width: 767px) {
+  .hero-unit {
+    padding: 20px;
+  }
+  .sticky {
+    position: static;
+  }
 }
